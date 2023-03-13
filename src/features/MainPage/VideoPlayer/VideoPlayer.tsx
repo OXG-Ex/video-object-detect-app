@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { VideoSizeModel } from "../../../models/VideoSizeModel";
 import { updateRects } from "../../../sagas/analyticSagaActions";
 import { getEventRects } from "../../../store/analyticData/analyticDataReducer";
@@ -14,15 +14,23 @@ export type VideoPlayerProps = {
 const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoSrc, videoRef }) => {
     const dispatch = useAppDispatch();
     // const [resizeMode, setResizeMode] = useState(true);
+    const [isPlaying, setIsPlaying] = useState(false);
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const rects = useAppSelector(getEventRects);
     const currentVideoSize = useAppSelector(getCurrentVideoSize);
     const originalVideoSize = useAppSelector(getOriginalVideoSize);
 
-    useEffect(() => {
-        // const draw = SVG("#svg-events");
-        // draw?.clear();
+    const playPauseVideo = useCallback(() => {
+        isPlaying ? videoRef.current?.pause() : videoRef.current?.play();
+        setIsPlaying(!isPlaying);
+    }, [isPlaying, videoRef]);
 
+
+    useEffect(() => {
+        const canvas = canvasRef.current as HTMLCanvasElement;
+        const context = canvas.getContext('2d') as CanvasRenderingContext2D;
+
+        context.clearRect(0, 0, canvas.width, canvas.height);
         rects.forEach(rect => {
             // if (resizeMode) {
             //     // ------------Exp calculation of zones------------//
@@ -30,17 +38,12 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoSrc, videoRef }) => {
             //     draw?.rect(newZone.width, newZone.height).stroke("#00FF00").fill({ opacity: 0 }).move(newZone.x, newZone.y);
             //     return;
             // }
-            // draw?.rect(rect.width, rect.height).stroke("#00FF00").fill({ opacity: 0 }).move(rect.left, rect.top);
-            const canvas = canvasRef.current as HTMLCanvasElement;
-            const context = canvas.getContext('2d') as CanvasRenderingContext2D;
 
-
-            context.fillStyle = '#000000';
+            context.strokeStyle = '#00ff00';
             context.beginPath();
-            context.rect(0, 0, rect.width, rect.height);
-            context.fill();
-            // canvas.width=
-            // context.save();
+            context.rect(rect.left, rect.top, rect.width, rect.height);
+            context.stroke();
+
         });
 
 
@@ -51,6 +54,9 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoSrc, videoRef }) => {
             height: (e.target as HTMLVideoElement).videoHeight,
             width: (e.target as HTMLVideoElement).videoWidth
         }));
+        const canvas = canvasRef.current as HTMLCanvasElement;
+        canvas.width = (e.target as HTMLVideoElement).videoWidth;
+        canvas.height = (e.target as HTMLVideoElement).videoHeight;
     }, [dispatch]);
 
     const onWindowResize = useCallback(() => {
@@ -79,7 +85,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoSrc, videoRef }) => {
             style={{ zIndex: 2 }}
             onResize={onWindowResize}
         />
-        <canvas id="canvas-events" ref={canvasRef} />
+        <canvas id="canvas-events" ref={canvasRef} onClick={playPauseVideo} style={{ zIndex: 3 }} />
         {/* <Checkbox title="Enable resize mode" checked={resizeMode} onChange={(e, checked) => { setResizeMode(checked); }} /> */}
 
     </div>;
