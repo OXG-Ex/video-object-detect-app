@@ -24,6 +24,6 @@ export const {
 
 //selectors
 export const getOriginalVideoSize = (store: RootStoreType): VideoSizeModel => store.videoPlayerData.originalVideoSize;
-export const getCurrentsVideoSize = (store: RootStoreType): VideoSizeModel => store.videoPlayerData.currentVideoSize;
+export const getCurrentVideoSize = (store: RootStoreType): VideoSizeModel => store.videoPlayerData.currentVideoSize;
 
 export default videoPlayerDataSlice.reducer;
