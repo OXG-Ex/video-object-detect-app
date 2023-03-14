@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, Container, Stack } from "@mui/material";
+import { Box, Card, CardContent, Container, Typography } from "@mui/material";
 import { useEffect, useRef } from "react";
 import { loadAnalyticEvents } from "../../sagas/analyticSagaActions";
 import { useAppDispatch } from "../../store/hooks";
@@ -14,17 +14,14 @@ export const MainPage: React.FC = () => {
     }, [dispatch]);
 
     return <Container sx={{ pt: "30px", width: "fit-content" }} maxWidth={false}>
-        <Card sx={{}} elevation={10}>
-            <CardHeader
-                title="Video with analytics data"
-            />
+        <Card elevation={10}>
+            <Typography variant="h5" sx={{ pt: "16px", textAlign: "center", textTransform: "uppercase" }}>Video with analytics events</Typography>
             <CardContent>
-                <Stack direction={"row"} gap={"20px"} alignItems={"center"}>
+                <Box sx={{ display: "flex", flexDirection: "row", gap: "20px" }}>
                     <VideoPlayer videoSrc="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" videoRef={videoRef} />
                     <EventsList videoRef={videoRef} />
-                </Stack>
+                </Box>
             </CardContent>
         </Card>
-
     </Container>;
 };

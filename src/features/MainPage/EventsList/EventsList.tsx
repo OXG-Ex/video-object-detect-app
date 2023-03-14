@@ -20,23 +20,29 @@ const EventsList: React.FC<EventsListProps> = ({ videoRef }) => {
 
     const listItems = events.map(x => <ListItem disablePadding key={x.id}>
         <ListItemButton onClick={() => { setCurrentVideoTime(x.timestamp); }}>
-            <ListItemText>
+            <ListItemText sx={{ textAlign: "center" }}>
                 {moment(x.timestamp).format("mm:ss:ms")}
             </ListItemText>
         </ListItemButton>
     </ListItem>);
 
-    return <Card sx={{ width: "250px", flexShrink: 0, maxHeight: "460px" }}>
+    return <Card sx={{ width: "250px", display: "flex", flexDirection: "column" }}>
         <CardHeader
             title="Events"
-            sx={{ backgroundColor: "primary.dark" }}
+            sx={{ backgroundColor: "primary.dark", textAlign: "center", textTransform: "uppercase" }}
         />
-        <CardContent sx={{ p: 0, maxHeight: "400px" }}>
-            <Scrollbars renderThumbVertical={() => <Box sx={{ backgroundColor: "primary.main", borderRadius: 5 }} />} autoHeight autoHeightMax={"400px"}>
-                <List>
+        <CardContent sx={{
+            p: 0,
+            height: "100%",
+            "&:last-child": {
+                pb: 0
+            }
+        }}>
+            <List sx={{ p: 0, height: "100%" }}>
+                <Scrollbars renderThumbVertical={() => <Box sx={{ backgroundColor: "primary.main", borderRadius: 5 }} />} style={{ height: '100%' }}>
                     {listItems}
-                </List>
-            </Scrollbars>
+                </Scrollbars>
+            </List>
         </CardContent>
     </Card>;
 };
