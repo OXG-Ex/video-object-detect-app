@@ -11,8 +11,8 @@ const analyticDataSlice = createSlice({
         setAnalyticEvents: (state, action: PayloadAction<AnalyticEventModel[]>) => {
             state.analyticEvents = action.payload;
         },
-        setIsLoading: (state, action: PayloadAction<boolean>) => {
-            state.isLoading = action.payload;
+        setIsEventsLoading: (state, action: PayloadAction<boolean>) => {
+            state.isEventsLoading = action.payload;
         },
         pushEventRect: (state, action: PayloadAction<AnalyticEventModel>) => {
             state.eventRects = [...state.eventRects, action.payload];
@@ -25,14 +25,14 @@ const analyticDataSlice = createSlice({
 
 export const {
     setAnalyticEvents,
-    setIsLoading,
+    setIsEventsLoading,
     pushEventRect,
     removeEventRectById
 } = analyticDataSlice.actions;
 
 //selectors
 export const getAnalyticEvents = (store: RootStoreType): AnalyticEventModel[] => store.analyticData.analyticEvents;
-export const getIsLoading = (store: RootStoreType): boolean => store.analyticData.isLoading;
+export const getIsEventsLoading = (store: RootStoreType): boolean => store.analyticData.isEventsLoading;
 export const getEventRects = (store: RootStoreType): AnalyticEventModel[] => store.analyticData.eventRects;
 
 export default analyticDataSlice.reducer;

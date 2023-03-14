@@ -4,6 +4,7 @@ import { updateRects } from "../../../sagas/analyticSagaActions";
 import { getEventRects } from "../../../store/analyticData/analyticDataReducer";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import PlayerControls from "./PlayerControls/PlayerControls";
+import PlayerSkeleton from "./PlayerSkeleton/PlayerSkeleton";
 
 export type VideoPlayerProps = {
     videoSrc: string;
@@ -13,13 +14,19 @@ export type VideoPlayerProps = {
 const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoSrc, videoRef }) => {
     const dispatch = useAppDispatch();
     const [isPlaying, setIsPlaying] = useState(false);
+    const [isMetaDataLoaded, setIsMetaDataLoaded] = useState(false);
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const rects = useAppSelector(getEventRects);
 
     const playPauseVideo = useCallback(() => {
+
+        if (!isMetaDataLoaded) {
+            return;
+        }
+
         isPlaying ? videoRef.current?.pause() : videoRef.current?.play();
         setIsPlaying(!isPlaying);
-    }, [isPlaying, videoRef]);
+    }, [isMetaDataLoaded, isPlaying, videoRef]);
 
     const onTimeUpdate = useCallback(() => dispatch(updateRects(videoRef.current?.currentTime as number)), [dispatch, videoRef]);
 
@@ -44,9 +51,11 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoSrc, videoRef }) => {
         const canvas = canvasRef.current as HTMLCanvasElement;
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
+        setIsMetaDataLoaded(true);
     }, []);
 
     return <Box sx={{ position: "relative" }}>
+        {!isMetaDataLoaded && <PlayerSkeleton />}
         <video
             ref={videoRef}
             src={videoSrc}
@@ -54,6 +63,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoSrc, videoRef }) => {
             onTimeUpdate={onTimeUpdate}
             preload="metadata"
             onLoadedMetadata={onLoadedMetaData}
+            hidden={!isMetaDataLoaded}
         />
         <canvas id="canvas-events" ref={canvasRef} style={{ position: "absolute", top: 0, left: 0 }} onClick={playPauseVideo} />
         <PlayerControls videoRef={videoRef} isPlaying={isPlaying} playPauseCallback={playPauseVideo} />

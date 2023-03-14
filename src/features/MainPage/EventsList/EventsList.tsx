@@ -1,9 +1,10 @@
-import { Box, Card, CardContent, CardHeader, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
-import moment from "moment";
+import { Box, Card, CardContent, CardHeader, List, Typography } from "@mui/material";
+import { useCallback, useMemo } from "react";
 import Scrollbars from "react-custom-scrollbars-2";
 import { updateRects } from "../../../sagas/analyticSagaActions";
-import { getAnalyticEvents } from "../../../store/analyticData/analyticDataReducer";
+import { getAnalyticEvents, getIsEventsLoading } from "../../../store/analyticData/analyticDataReducer";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import EventItem from "./EventItem/EventItem";
 
 export type EventsListProps = {
     videoRef: React.RefObject<HTMLVideoElement>;
@@ -12,19 +13,16 @@ export type EventsListProps = {
 const EventsList: React.FC<EventsListProps> = ({ videoRef }) => {
     const dispatch = useAppDispatch();
     const events = useAppSelector(getAnalyticEvents);
+    const isLoading = useAppSelector(getIsEventsLoading);
 
-    const setCurrentVideoTime = (time: number) => {
+    const setCurrentVideoTime = useCallback((time: number) => {
         (videoRef.current as HTMLVideoElement).currentTime = time / 1000;
         dispatch(updateRects(time / 1000));
-    };
+    }, [dispatch, videoRef]);
 
-    const listItems = events.map(x => <ListItem disablePadding key={x.id}>
-        <ListItemButton onClick={() => { setCurrentVideoTime(x.timestamp); }}>
-            <ListItemText sx={{ textAlign: "center" }}>
-                {moment(x.timestamp).format("mm:ss:ms")}
-            </ListItemText>
-        </ListItemButton>
-    </ListItem>);
+    const listItems = useMemo(() => {
+        return events.map(x => <EventItem onClick={() => setCurrentVideoTime(x.timestamp)} timestamp={x.timestamp} key={x.id} />);
+    }, [events, setCurrentVideoTime]);
 
     return <Card sx={{ width: "250px", display: "flex", flexDirection: "column" }}>
         <CardHeader
@@ -39,8 +37,8 @@ const EventsList: React.FC<EventsListProps> = ({ videoRef }) => {
             }
         }}>
             <List sx={{ p: 0, height: "100%" }}>
-                <Scrollbars renderThumbVertical={() => <Box sx={{ backgroundColor: "primary.main", borderRadius: 5 }} />} style={{ height: '100%' }}>
-                    {listItems}
+                <Scrollbars renderThumbVertical={() => <Box sx={{ backgroundColor: "primary.main", borderRadius: 5 }} />} style={{ height: '100%' }} autoHide>
+                    {!isLoading ? listItems : <Typography variant="h6" sx={{ textAlign: "center", pt: "10px" }}>Loading...</Typography>}
                 </Scrollbars>
             </List>
         </CardContent>

@@ -2,7 +2,7 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import { all, put, select, takeEvery, takeLatest } from "redux-saga/effects";
 import { AnalyticEventModel } from "../models/AnalyticEventModel";
 
-import { getAnalyticEvents, pushEventRect, removeEventRectById, setAnalyticEvents, setIsLoading } from "../store/analyticData/analyticDataReducer";
+import { getAnalyticEvents, pushEventRect, removeEventRectById, setAnalyticEvents, setIsEventsLoading } from "../store/analyticData/analyticDataReducer";
 import { loadAnalyticEvents, updateRects } from "./analyticSagaActions";
 
 
@@ -16,12 +16,12 @@ const eventsApiFetch = (): Promise<AnalyticEventModel[]> => fetch(apiUrl).then(r
 
 function* watchLoadingAnalyticEvents(): Generator {
     try {
-        yield put(setIsLoading(true));
+        yield put(setIsEventsLoading(true));
         const events = (yield eventsApiFetch()) as AnalyticEventModel[];
         events.sort((a, b) => a.timestamp - b.timestamp);
 
         yield put(setAnalyticEvents(events));
-        yield put(setIsLoading(false));
+        yield put(setIsEventsLoading(false));
     }
     catch (error) {
         console.error(error);
