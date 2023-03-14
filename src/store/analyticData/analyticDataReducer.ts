@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { AnalyticEventModel } from "../../models/AnalyticEventModel";
-import { AnalyticEventZoneModel } from "../../models/AnalyticEventZoneModel";
 import { RootStoreType } from "../rootReducer";
 import { initialAnalyticState } from "./analyticDataModel";
 
@@ -15,11 +14,11 @@ const analyticDataSlice = createSlice({
         setIsLoading: (state, action: PayloadAction<boolean>) => {
             state.isLoading = action.payload;
         },
-        pushEventRect: (state, action: PayloadAction<{ id: number, rect: AnalyticEventZoneModel; }>) => {
-            state.eventRects.set(action.payload.id, action.payload.rect);
+        pushEventRect: (state, action: PayloadAction<AnalyticEventModel>) => {
+            state.eventRects = [...state.eventRects, action.payload];
         },
-        removeEventRect: (state, action: PayloadAction<number>) => {
-            state.eventRects.delete(action.payload);
+        removeEventRectById: (state, action: PayloadAction<number>) => {
+            state.eventRects = state.eventRects.filter(x => x.id !== action.payload);
         },
     }
 });
@@ -28,12 +27,12 @@ export const {
     setAnalyticEvents,
     setIsLoading,
     pushEventRect,
-    removeEventRect
+    removeEventRectById
 } = analyticDataSlice.actions;
 
 //selectors
 export const getAnalyticEvents = (store: RootStoreType): AnalyticEventModel[] => store.analyticData.analyticEvents;
 export const getIsLoading = (store: RootStoreType): boolean => store.analyticData.isLoading;
-export const getEventRects = (store: RootStoreType): Map<number, AnalyticEventZoneModel> => store.analyticData.eventRects;
+export const getEventRects = (store: RootStoreType): AnalyticEventModel[] => store.analyticData.eventRects;
 
 export default analyticDataSlice.reducer;

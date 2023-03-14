@@ -2,12 +2,10 @@ import { configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './rootSaga';
 import { createRootReducer } from './rootReducer';
-import { enableMapSet } from 'immer';
 
 const devMode = process.env.NODE_ENV === 'development';
 const sagaMiddleware = createSagaMiddleware();
 const reducer = createRootReducer();
-enableMapSet();
 
 export const store = configureStore({
     reducer: reducer,
