@@ -1,9 +1,12 @@
-import { Box, Card, CardContent, Container, Typography } from "@mui/material";
 import { useEffect, useRef } from "react";
-import { loadAnalyticEvents } from "../../sagas/analyticSagaActions";
-import { useAppDispatch } from "../../store/hooks";
+import { Box, Card, CardContent, Container, Typography } from "@mui/material";
+
 import EventsList from "./EventsList/EventsList";
 import VideoPlayer from "./VideoPlayer/VideoPlayer";
+import { loadAnalyticEvents } from "../../sagas/analyticSagaActions";
+import { useAppDispatch } from "../../store/hooks";
+
+const videoSrc = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
 
 export const MainPage: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -18,7 +21,7 @@ export const MainPage: React.FC = () => {
             <Typography variant="h5" sx={{ pt: "16px", textAlign: "center", textTransform: "uppercase" }}>Video with analytics events</Typography>
             <CardContent>
                 <Box sx={{ display: "flex", flexDirection: "row", gap: "20px" }}>
-                    <VideoPlayer videoSrc="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" videoRef={videoRef} />
+                    <VideoPlayer videoSrc={videoSrc} videoRef={videoRef} />
                     <EventsList videoRef={videoRef} />
                 </Box>
             </CardContent>

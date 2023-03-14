@@ -1,7 +1,8 @@
-import { Tooltip, Fab } from "@mui/material";
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
+import { Fab, Tooltip } from "@mui/material";
+
 import { routes } from "../router/routes";
 
 const HomeButton: React.FC = () => {

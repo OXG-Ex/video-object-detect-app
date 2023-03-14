@@ -1,8 +1,8 @@
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import { useCallback, useEffect, useState } from "react";
 import PauseIcon from '@mui/icons-material/Pause';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import { IconButton, LinearProgress, Stack, Typography } from "@mui/material";
 import moment from 'moment';
-import { useCallback, useEffect, useState } from "react";
 
 export type PlayerControlsProps = {
     videoRef: React.RefObject<HTMLVideoElement>;

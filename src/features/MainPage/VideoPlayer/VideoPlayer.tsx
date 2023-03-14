@@ -1,10 +1,11 @@
-import { Box } from "@mui/material";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Box } from "@mui/material";
+
+import PlayerControls from "./PlayerControls/PlayerControls";
+import PlayerSkeleton from "./PlayerSkeleton/PlayerSkeleton";
 import { updateRects } from "../../../sagas/analyticSagaActions";
 import { getEventRects } from "../../../store/analyticData/analyticDataReducer";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import PlayerControls from "./PlayerControls/PlayerControls";
-import PlayerSkeleton from "./PlayerSkeleton/PlayerSkeleton";
 
 export type VideoPlayerProps = {
     videoSrc: string;
@@ -19,7 +20,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoSrc, videoRef }) => {
     const rects = useAppSelector(getEventRects);
 
     const playPauseVideo = useCallback(() => {
-
         if (!isMetaDataLoaded) {
             return;
         }
@@ -34,16 +34,18 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoSrc, videoRef }) => {
         const canvas = canvasRef.current as HTMLCanvasElement;
         const context = canvas.getContext('2d') as CanvasRenderingContext2D;
 
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        context.strokeStyle = '#00ff00';
+        if (context) {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.strokeStyle = '#00ff00';
 
-        rects.forEach(rect => {
-            const { left, top, width, height } = rect.zone;
+            rects.forEach(rect => {
+                const { left, top, width, height } = rect.zone;
 
-            context.beginPath();
-            context.rect(left, top, width, height);
-            context.stroke();
-        });
+                context.beginPath();
+                context.rect(left, top, width, height);
+                context.stroke();
+            });
+        }
     }, [rects]);
 
     const onLoadedMetaData = useCallback((e: React.SyntheticEvent<HTMLVideoElement, Event>) => {
@@ -64,8 +66,9 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoSrc, videoRef }) => {
             preload="metadata"
             onLoadedMetadata={onLoadedMetaData}
             hidden={!isMetaDataLoaded}
+            data-testid="video-player"
         />
-        <canvas id="canvas-events" ref={canvasRef} style={{ position: "absolute", top: 0, left: 0 }} onClick={playPauseVideo} />
+        <canvas data-testid="canvas-events" ref={canvasRef} style={{ position: "absolute", top: 0, left: 0 }} onClick={playPauseVideo} />
         <PlayerControls videoRef={videoRef} isPlaying={isPlaying} playPauseCallback={playPauseVideo} />
     </Box>;
 };

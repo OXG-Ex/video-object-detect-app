@@ -1,0 +1,45 @@
+{
+    "env": {
+        "browser": true,
+        "es2020": true
+    },
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 11,
+        "sourceType": "module"
+    },
+    "extends": [
+    ],
+    "plugins": ["react", "@typescript-eslint", "react-hooks", "simple-import-sort"],
+    "rules": {
+        "simple-import-sort/imports": "error"
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    },
+    "overrides": [
+        {
+            "files": ["*.js", "*.jsx", "*.ts", "*.tsx"],
+            "rules": {
+                "simple-import-sort/imports": [
+                    "error",
+                    {
+                        "groups": [
+                            // Packages `react` related packages come first.
+                            ["^react", "^@?\\w"],
+                            // Other relative imports. Put same-folder imports and `.` last.
+                            ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
+                            // Style imports and side effect imports.
+                            ["^.+\\.?(scss)$", "^.+\\.?(less)$", "^.+\\.?(css)$", "^\\u0000"]
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
+}

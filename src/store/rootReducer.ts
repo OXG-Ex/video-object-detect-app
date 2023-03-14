@@ -1,4 +1,5 @@
 import { CombinedState, combineReducers, Reducer } from "redux";
+
 import { initialAnalyticState } from "./analyticData/analyticDataModel";
 import analyticDataReducer from "./analyticData/analyticDataReducer";
 

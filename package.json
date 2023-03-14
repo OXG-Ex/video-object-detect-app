@@ -56,5 +56,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "canvas": "2.11.0",
+    "eslint-plugin-simple-import-sort": "8.0.0",
+    "jest-canvas-mock": "2.4.0"
   }
 }

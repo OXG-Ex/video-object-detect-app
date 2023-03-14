@@ -1,5 +1,6 @@
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import { Container, Stack, Typography } from '@mui/material';
+
 import HomeButton from '../FloatingButtons/HomeButton';
 
 const NotFoundPage: React.FC = () => {

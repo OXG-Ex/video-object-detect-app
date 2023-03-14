@@ -1,7 +1,7 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { all, put, select, takeEvery, takeLatest } from "redux-saga/effects";
-import { AnalyticEventModel } from "../models/AnalyticEventModel";
 
+import { AnalyticEventModel } from "../models/AnalyticEventModel";
 import { getAnalyticEvents, pushEventRect, removeEventRectById, setAnalyticEvents, setIsEventsLoading } from "../store/analyticData/analyticDataReducer";
 import { loadAnalyticEvents, updateRects } from "./analyticSagaActions";
 

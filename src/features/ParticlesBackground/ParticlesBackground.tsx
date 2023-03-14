@@ -2,6 +2,7 @@ import { useCallback } from "react";
 import Particles, { } from "react-tsparticles";
 import { loadFull } from "tsparticles";
 import { Engine, ISourceOptions } from "tsparticles-engine";
+
 import config from './particlesConfig.json';
 
 export const ParticlesBackground = () => {

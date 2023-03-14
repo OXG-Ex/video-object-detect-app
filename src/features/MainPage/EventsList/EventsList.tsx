@@ -1,10 +1,11 @@
-import { Box, Card, CardContent, CardHeader, List, Typography } from "@mui/material";
 import { useCallback, useMemo } from "react";
 import Scrollbars from "react-custom-scrollbars-2";
+import { Box, Card, CardContent, CardHeader, List, Typography } from "@mui/material";
+
+import EventItem from "./EventItem/EventItem";
 import { updateRects } from "../../../sagas/analyticSagaActions";
 import { getAnalyticEvents, getIsEventsLoading } from "../../../store/analyticData/analyticDataReducer";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import EventItem from "./EventItem/EventItem";
 
 export type EventsListProps = {
     videoRef: React.RefObject<HTMLVideoElement>;
