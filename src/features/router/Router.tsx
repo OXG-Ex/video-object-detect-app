@@ -1,4 +1,5 @@
-import { Routes, Route } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
+
 import { MainPage } from "../MainPage/MainPage";
 import NotFoundPage from "../NotFoundPage/NotFoundPage";
 import { routes } from "./routes";
