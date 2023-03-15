@@ -31,6 +31,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoSrc, videoRef }) => {
     const onTimeUpdate = useCallback(() => dispatch(updateRects(videoRef.current?.currentTime as number)), [dispatch, videoRef]);
 
     useEffect(() => {
+        //get canvas from ref and context from element
         const canvas = canvasRef.current as HTMLCanvasElement;
         const context = canvas.getContext('2d') as CanvasRenderingContext2D;
 
@@ -38,6 +39,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoSrc, videoRef }) => {
             context.clearRect(0, 0, canvas.width, canvas.height);
             context.strokeStyle = '#00ff00';
 
+            //draw rect for all current events
             rects.forEach(rect => {
                 const { left, top, width, height } = rect.zone;
 
@@ -51,6 +53,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoSrc, videoRef }) => {
     const onLoadedMetaData = useCallback((e: React.SyntheticEvent<HTMLVideoElement, Event>) => {
         const video = e.target as HTMLVideoElement;
         const canvas = canvasRef.current as HTMLCanvasElement;
+        //set canvas size the same as video size 
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
         setIsMetaDataLoaded(true);

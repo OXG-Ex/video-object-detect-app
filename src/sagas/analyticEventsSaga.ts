@@ -17,7 +17,9 @@ const eventsApiFetch = (): Promise<AnalyticEventModel[]> => fetch(apiUrl).then(r
 export function* watchLoadingAnalyticEvents(): Generator {
     try {
         yield put(setIsEventsLoading(true));
+        //get events from api
         const events = (yield eventsApiFetch()) as AnalyticEventModel[];
+        //Sort events
         events.sort((a, b) => a.timestamp - b.timestamp);
 
         yield put(setAnalyticEvents(events));
@@ -30,8 +32,10 @@ export function* watchLoadingAnalyticEvents(): Generator {
 
 export function* watchUpdatingRects(action: PayloadAction<number>): Generator {
     try {
+        //get timestamp in milliseconds
         const currentTimestamp = Math.floor(action.payload * 1000);
         const events = (yield select(getAnalyticEvents)) as AnalyticEventModel[];
+        //Updating event rects for current timestamp
         yield all(events.map(x => {
             const endTimestamp = x.timestamp + x.duration;
             if (currentTimestamp >= x.timestamp && currentTimestamp <= endTimestamp) {

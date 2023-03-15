@@ -13,6 +13,7 @@ export const MainPage: React.FC = () => {
     const videoRef = useRef<HTMLVideoElement>(null);
 
     useEffect(() => {
+        //Load events
         dispatch(loadAnalyticEvents());
     }, [dispatch]);
 

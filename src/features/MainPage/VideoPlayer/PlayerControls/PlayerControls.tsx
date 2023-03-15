@@ -15,6 +15,7 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({ videoRef, playPauseCall
     const [currentTime, setCurrentTime] = useState("00:00");
 
     const updateProgress = useCallback(() => {
+        //update "filled" area of progress
         const videoTime = videoRef.current?.currentTime;
         const videoLength = videoRef.current?.duration;
         setProgress(videoTime * 100 / videoLength);
@@ -23,9 +24,12 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({ videoRef, playPauseCall
 
     const onProgressClick = useCallback((event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
         const boundingRect = event.currentTarget.getBoundingClientRect();
+        //get X coordinate of click relative to the beginning of progressbar
         const clickX = event.clientX - boundingRect.left;
         const progressBarWidth = boundingRect.width;
+        //calculate percentages of X coordinate relative t progressbar size
         const percentage = (clickX / progressBarWidth) * 100;
+        //set current video time
         videoRef.current.currentTime = (percentage / 100) * videoRef.current.duration;
     }, [videoRef]);
 
