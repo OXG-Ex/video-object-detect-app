@@ -1,4 +1,3 @@
-import React, { createRef, RefObject, useRef } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import { mockEvents, useDispatchMock, useSelectorMock, videoRefMock } from '../../../common/testMocks';

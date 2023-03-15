@@ -3,7 +3,7 @@ import Scrollbars from "react-custom-scrollbars-2";
 import { Box, Card, CardContent, CardHeader, List, Typography } from "@mui/material";
 
 import EventItem from "./EventItem/EventItem";
-import { updateRects } from "../../../sagas/analyticSagaActions";
+import { updateRects } from "../../../sagas/analyticEventsSagaActions";
 import { getAnalyticEvents, getIsEventsLoading } from "../../../store/analyticData/analyticDataReducer";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 

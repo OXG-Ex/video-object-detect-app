@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 
 import PlayerControls from "./PlayerControls/PlayerControls";
 import PlayerSkeleton from "./PlayerSkeleton/PlayerSkeleton";
-import { updateRects } from "../../../sagas/analyticSagaActions";
+import { updateRects } from "../../../sagas/analyticEventsSagaActions";
 import { getEventRects } from "../../../store/analyticData/analyticDataReducer";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 

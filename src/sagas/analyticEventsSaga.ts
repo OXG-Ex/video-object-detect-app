@@ -3,10 +3,10 @@ import { all, put, select, takeEvery, takeLatest } from "redux-saga/effects";
 
 import { AnalyticEventModel } from "../models/AnalyticEventModel";
 import { getAnalyticEvents, pushEventRect, removeEventRectById, setAnalyticEvents, setIsEventsLoading } from "../store/analyticData/analyticDataReducer";
-import { loadAnalyticEvents, updateRects } from "./analyticSagaActions";
+import { loadAnalyticEvents, updateRects } from "./analyticEventsSagaActions";
 
 
-export const analyticSagas = [
+export const analyticEventsSagas = [
     takeLatest(loadAnalyticEvents, watchLoadingAnalyticEvents),
     takeEvery(updateRects, watchUpdatingRects)
 ];
@@ -14,7 +14,7 @@ export const analyticSagas = [
 const apiUrl = "http://www.mocky.io/v2/5e60c5f53300005fcc97bbdd";
 const eventsApiFetch = (): Promise<AnalyticEventModel[]> => fetch(apiUrl).then(res => res.json());
 
-function* watchLoadingAnalyticEvents(): Generator {
+export function* watchLoadingAnalyticEvents(): Generator {
     try {
         yield put(setIsEventsLoading(true));
         const events = (yield eventsApiFetch()) as AnalyticEventModel[];
@@ -28,7 +28,7 @@ function* watchLoadingAnalyticEvents(): Generator {
     }
 }
 
-function* watchUpdatingRects(action: PayloadAction<number>): Generator {
+export function* watchUpdatingRects(action: PayloadAction<number>): Generator {
     try {
         const currentTimestamp = Math.floor(action.payload * 1000);
         const events = (yield select(getAnalyticEvents)) as AnalyticEventModel[];

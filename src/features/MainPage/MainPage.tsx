@@ -3,7 +3,7 @@ import { Box, Card, CardContent, Container, Typography } from "@mui/material";
 
 import EventsList from "./EventsList/EventsList";
 import VideoPlayer from "./VideoPlayer/VideoPlayer";
-import { loadAnalyticEvents } from "../../sagas/analyticSagaActions";
+import { loadAnalyticEvents } from "../../sagas/analyticEventsSagaActions";
 import { useAppDispatch } from "../../store/hooks";
 
 const videoSrc = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";

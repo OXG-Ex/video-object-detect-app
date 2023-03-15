@@ -1,9 +1,9 @@
 import { all } from 'redux-saga/effects';
 
-import { analyticSagas } from '../sagas/analyticSaga';
+import { analyticEventsSagas } from '../sagas/analyticEventsSaga';
 
 export default function* rootSaga(): Generator {
     yield all([
-        ...analyticSagas
+        ...analyticEventsSagas
     ]);
 }
