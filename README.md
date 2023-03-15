@@ -28,6 +28,7 @@ To launch project on your local machine:
 - See the result in console
 
 ---
+# Описание
 
 Этот проект был создан с помощью [Create React App](https://github.com/facebook/create-react-app), с использованием [Redux](https://redux.js.org/) и [Redux Toolkit]. (https://redux-toolkit.js.org/). Шаблон TS.
 
