@@ -14,20 +14,16 @@ const analyticDataSlice = createSlice({
         setIsEventsLoading: (state, action: PayloadAction<boolean>) => {
             state.isEventsLoading = action.payload;
         },
-        pushEventRect: (state, action: PayloadAction<AnalyticEventModel>) => {
-            state.eventRects = [...state.eventRects, action.payload];
-        },
-        removeEventRectById: (state, action: PayloadAction<number>) => {
-            state.eventRects = state.eventRects.filter(x => x.id !== action.payload);
-        },
+        setEventRects: (state, action: PayloadAction<AnalyticEventModel[]>) => {
+            state.eventRects = action.payload;
+        }
     }
 });
 
 export const {
     setAnalyticEvents,
     setIsEventsLoading,
-    pushEventRect,
-    removeEventRectById
+    setEventRects
 } = analyticDataSlice.actions;
 
 //selectors

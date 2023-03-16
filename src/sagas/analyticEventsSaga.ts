@@ -2,7 +2,7 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import { all, put, select, takeEvery, takeLatest } from "redux-saga/effects";
 
 import { AnalyticEventModel } from "../models/AnalyticEventModel";
-import { getAnalyticEvents, pushEventRect, removeEventRectById, setAnalyticEvents, setIsEventsLoading } from "../store/analyticData/analyticDataReducer";
+import { getAnalyticEvents, setAnalyticEvents, setEventRects, setIsEventsLoading } from "../store/analyticData/analyticDataReducer";
 import { loadAnalyticEvents, updateRects } from "./analyticEventsSagaActions";
 
 
@@ -36,15 +36,11 @@ export function* watchUpdatingRects(action: PayloadAction<number>): Generator {
         const currentTimestamp = Math.floor(action.payload * 1000);
         const events = (yield select(getAnalyticEvents)) as AnalyticEventModel[];
         //Updating event rects for current timestamp
-        yield all(events.map(x => {
+        const rects = events.filter(x => {
             const endTimestamp = x.timestamp + x.duration;
-            if (currentTimestamp >= x.timestamp && currentTimestamp <= endTimestamp) {
-                return put(pushEventRect(x));
-            }
-            else {
-                return put(removeEventRectById(x.id));
-            }
-        }));
+            return currentTimestamp >= x.timestamp && currentTimestamp <= endTimestamp;
+        });
+        yield put(setEventRects(rects));
     }
     catch (error) {
         console.error(error);
