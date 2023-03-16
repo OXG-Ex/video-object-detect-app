@@ -3,6 +3,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) TS template.
 
 There is a [list of analytics events](http://www.mocky.io/v2/5e60c5f53300005fcc97bbdd)  with timestamps (time in milliseconds from the beginning of the video) and data about zone in the frame where the event occurred (coordinates in pixels)
+
 [Test video stream](http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4)
 
 The web application has the following functionality:
@@ -28,10 +29,12 @@ To launch project on your local machine:
 - See the result in console
 
 ---
+# Описание
 
 Этот проект был создан с помощью [Create React App](https://github.com/facebook/create-react-app), с использованием [Redux](https://redux.js.org/) и [Redux Toolkit]. (https://redux-toolkit.js.org/). Шаблон TS.
 
 Существует [список событий аналитики](http://www.mocky.io/v2/5e60c5f53300005fcc97bbdd) с метками времени (время в миллисекундах от начала видео) и данными о зоне в кадре, где произошло событие (координаты в пикселях)
+
 [Тестовый видеопоток](http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4)
 
 Веб-приложение имеет следующий функционал:
